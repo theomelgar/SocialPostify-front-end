@@ -33,8 +33,8 @@ export default function Posted() {
     }
   }
   return (
-    <div className="flex flex-col p-4 gap-6 m-4">
-      <h1 className="text-3xl">Published</h1>
+    <div className="flex flex-col gap-6 md:p-4 md:m-4">
+      <h1 className="text-3xl ">Published</h1>
       <div className="flex flex-col sm:flex-row gap-4">
         <CreatePost setUpdates={setUpdates} updates={updates} />
 

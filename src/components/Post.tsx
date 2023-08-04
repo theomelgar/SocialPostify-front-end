@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AlertDialog from "./Dialog";
 type PostProps = {
   post: any;
   setUpdates: any;
@@ -41,6 +42,7 @@ const Post: React.FC<PostProps> = ({ post, setUpdates, updates }) => {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
   async function handlePublish() {
     setDone((prevDone: any) => !prevDone);
 
@@ -59,7 +61,7 @@ const Post: React.FC<PostProps> = ({ post, setUpdates, updates }) => {
 
   return (
     <Card sx={{ maxWidth: 345 }} key={post.id}>
-      <CardActions className="p-4  flex justify-between gap-4">
+      <CardActions className="p-4 flex justify-between gap-4">
         <Typography className="font-bold text-xl" component="div">
           Posted?
         </Typography>
@@ -106,22 +108,7 @@ const Post: React.FC<PostProps> = ({ post, setUpdates, updates }) => {
             </svg>
           </Button>
         )}
-        <Button color="warning" variant="outlined">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-            />
-          </svg>
-        </Button>
+        <AlertDialog setUpdates={setUpdates} updates={updates}  title={post.title} id={post.id} />
       </CardActions>
       <CardMedia image={post.image} title="Post Image" component="img" />
       <CardContent>
@@ -142,7 +129,12 @@ const Post: React.FC<PostProps> = ({ post, setUpdates, updates }) => {
           </ExpandMore>
         </Typography>
 
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse
+          className="bg-gray-100"
+          in={expanded}
+          timeout="auto"
+          unmountOnExit
+        >
           <Typography
             className="overflow-scroll"
             variant="body1"
@@ -151,7 +143,7 @@ const Post: React.FC<PostProps> = ({ post, setUpdates, updates }) => {
             {post.text}
           </Typography>
         </Collapse>
-        <h2>Date to publish:</h2>
+        <h2 className="mt-3">Date to publish:</h2>
         <Typography gutterBottom variant="h5" component="div">
           {post.dateToPublish}
         </Typography>

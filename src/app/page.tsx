@@ -17,7 +17,7 @@ export default function Home() {
     setIsLoading(false);
 
     return () => {
-      setIsLoading(true); 
+      setIsLoading(true);
     };
   }, [login]);
 
@@ -28,7 +28,7 @@ export default function Home() {
         <div>
           <ResponsiveAppBar></ResponsiveAppBar>
 
-          <div className="flex p-4 gap-6 m-4">
+          <div className="flex gap-6 p-4 m-4">
             <Skeleton variant="rectangular" width={345} height={600} />
             <Skeleton variant="rectangular" width={345} height={600} />
             <Skeleton variant="rectangular" width={345} height={600} />
@@ -39,7 +39,10 @@ export default function Home() {
       ) : isClient ? (
         <>
           <ResponsiveAppBar></ResponsiveAppBar>
-          <Posts></Posts>
+          <div className="flex flex-col gap-6 ">
+            <h1 className="p-4 text-3xl">All posts</h1>
+            <Posts></Posts>
+          </div>
         </>
       ) : (
         <SignInSide></SignInSide>

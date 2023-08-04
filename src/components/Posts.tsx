@@ -33,8 +33,7 @@ export default function Posts() {
     }
   }
   return (
-    <div className="flex flex-wrap p-4 justify-center gap-6 md:justify-start lg:justify-center xl:justify-start">
-      {" "}
+    <div className="flex flex-wrap p-4 justify-center gap-6 md:justify-start">
       <CreatePost setUpdates={setUpdates} updates={updates} />
       <div className="flex gap-4">
         {posts ? (

@@ -18,12 +18,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "@/redux/features/authSlice";
 import { useRouter } from "next/navigation";
 
-const pages = ["Products", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Posted", "Logout"];
+const pages = ["All", "Published"];
+const settings = ["Logout"];
 
 function ResponsiveAppBar() {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter()
+  const router = useRouter();
   const [avatarUrl, setAvatarUrl] = React.useState<string | null>(null);
   const avatar = useAppSelector((state) => state.authReducer.value.avatar);
 
@@ -55,25 +55,28 @@ function ResponsiveAppBar() {
     dispatch(logOut());
   };
   const handlePostedClick = () => {
-    router.push('/posted')
+    router.push("/posted");
+    handleCloseUserMenu();
   };
   return (
-    <AppBar position="static" color="default">
+    <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            className="w-10 h-10"
-          >
-            <path
-              fillRule="evenodd"
-              d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 003 3h15a3 3 0 01-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125zM12 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H12zm-.75-2.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H12a.75.75 0 01-.75-.75zM6 12.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H6zm-.75 3.75a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5H6a.75.75 0 01-.75-.75zM6 6.75a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 00.75-.75v-3A.75.75 0 009 6.75H6z"
-              clipRule="evenodd"
-            />
-            <path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 01-3 0V6.75z" />
-          </svg>
+          <div onClick={() => router.push("/")}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="w-10 h-10"
+            >
+              <path
+                fillRule="evenodd"
+                d="M4.125 3C3.089 3 2.25 3.84 2.25 4.875V18a3 3 0 003 3h15a3 3 0 01-3-3V4.875C17.25 3.839 16.41 3 15.375 3H4.125zM12 9.75a.75.75 0 000 1.5h1.5a.75.75 0 000-1.5H12zm-.75-2.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5H12a.75.75 0 01-.75-.75zM6 12.75a.75.75 0 000 1.5h7.5a.75.75 0 000-1.5H6zm-.75 3.75a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5H6a.75.75 0 01-.75-.75zM6 6.75a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h3a.75.75 0 00.75-.75v-3A.75.75 0 009 6.75H6z"
+                clipRule="evenodd"
+              />
+              <path d="M18.75 6.75h1.875c.621 0 1.125.504 1.125 1.125V18a1.5 1.5 0 01-3 0V6.75z" />
+            </svg>
+          </div>
           <Typography
             variant="h6"
             noWrap
@@ -122,7 +125,22 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem
+                  key={page}
+                  onClick={() => {
+                    if (page === "All") {
+                      router.push('/');
+                      handleCloseNavMenu();
+
+                    } else if (page === "Published") {
+                      handlePostedClick();
+                      handleCloseNavMenu();
+
+                    } else {
+                      handleCloseNavMenu();
+                    }
+                  }}
+                >
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -133,7 +151,19 @@ function ResponsiveAppBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => {
+                  if (page === "All") {
+                    router.push('/');
+                    handleCloseNavMenu();
+
+                  } else if (page === "Published") {
+                    handlePostedClick();
+                    handleCloseNavMenu();
+
+                  } else {
+                    handleCloseNavMenu();
+                  }
+                }}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
